@@ -25,5 +25,4 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
-
 }
