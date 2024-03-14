@@ -24,6 +24,7 @@ public enum ErrorCode {
      */
     NOT_FOUND_USER_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
     NOT_FOUND_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 이미지입니다."),
+    LETTER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 유저의 유서를 찾을 수 없습니다."),
 
     /**
      * 401 UNAUTHORIZED
