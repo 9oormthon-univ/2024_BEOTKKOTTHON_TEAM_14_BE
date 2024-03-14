@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.letter.Letter;
+import com.example.demo.domain.user.User;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.exception.model.CustomException;
 import com.example.demo.repository.LetterRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
