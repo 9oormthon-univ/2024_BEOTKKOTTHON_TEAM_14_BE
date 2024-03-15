@@ -1,6 +1,6 @@
-package com.example.demo.controller.dto.response;
+package com.example.demo.controller.dto.response.user;
 
-import com.example.demo.domain.user.User;
+
 import lombok.*;
 
 @Getter
@@ -8,14 +8,13 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserResponseDto {
-    private Long userId;
+    private String socialEmail;
     private String userName;
 
-    public static UserResponseDto of(Long userId, String userName) { //entity -> dto 변환
+    public static UserResponseDto of(String socialEmail) { //entity -> dto 변환
         return UserResponseDto
                 .builder()
-                .userId(userId)
-                .userName(userName)
+                .socialEmail(socialEmail)
                 .build();
     }
 
