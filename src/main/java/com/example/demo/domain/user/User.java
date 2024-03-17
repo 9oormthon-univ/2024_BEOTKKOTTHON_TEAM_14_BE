@@ -1,28 +1,28 @@
 package com.example.demo.domain.user;
 
+
 import com.example.demo.domain.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Getter
-@DynamicInsert
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "users")
 public class User extends BaseEntity {
-    @Column(nullable = false)
-    private String userName;
+    @Column(unique = true)
+    String email; //확장성을 위해 넣어둠
 
-    @Column(nullable = false)
-    private String socialEmail;
+    @Column(unique = true)
+    String nickname;
 
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private SocialType socialType;
+    String password;
 }
