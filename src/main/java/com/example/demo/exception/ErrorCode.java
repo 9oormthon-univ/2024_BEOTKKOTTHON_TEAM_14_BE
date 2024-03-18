@@ -20,10 +20,18 @@ public enum ErrorCode {
     MAX_UPLOAD_SIZE_EXCEED_EXCEPTION(HttpStatus.PAYLOAD_TOO_LARGE, "파일 용량 초과"),
 
     /**
+     * 401 UNAUTHORIZED
+     */
+    INVALID_PASSWORD_EXCEPTION(HttpStatus.UNAUTHORIZED, "일치하지 않는 비밀번호입니다."),
+
+    /**
      * 404 NOT FOUND
      */
     NOT_FOUND_USER_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
     NOT_FOUND_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 이미지입니다."),
+    NOT_FOUND_NOTE(HttpStatus.NOT_FOUND, "존재하지 않는 유서입니다."),
+
+
 
     /**
      * 401 UNAUTHORIZED
