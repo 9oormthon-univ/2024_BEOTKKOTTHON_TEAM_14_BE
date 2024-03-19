@@ -17,7 +17,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     open-in-view: false
     show-sql: true
 
@@ -32,3 +32,7 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+
+openai:
+  api: https://api.openai.com
+  key: ${OPENAI_API_KEY}
