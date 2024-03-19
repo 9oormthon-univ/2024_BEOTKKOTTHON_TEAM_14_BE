@@ -29,14 +29,16 @@ public enum ErrorCode {
      */
     NOT_FOUND_USER_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
     NOT_FOUND_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 이미지입니다."),
-    NOT_FOUND_NOTE(HttpStatus.NOT_FOUND, "존재하지 않는 유서입니다."),
-
+    NOT_FOUND_WILL(HttpStatus.NOT_FOUND, "존재하지 않는 유서입니다."),
+    NOT_FOUND_ANSWER(HttpStatus.NOT_FOUND, "존재하지 않는 질문의 답변입니다."),
 
 
     /**
      * 409 Conflict
      */
     DUPLICATE_USER_EXCEPTION(HttpStatus.CONFLICT, "이미 존재하는 유저입니다."),
+    DUPLICATE_WILL_EXCEPTION(HttpStatus.CONFLICT, "유서를 이미 작성하셨습니다. 유서는 한 사람 당 한개입니다."),
+    DUPLICATE_ANSWER_EXCEPTION(HttpStatus.CONFLICT, "질문을 이미 답변하셨습니다."),
 
     /**
      * 500 INTERNAL SERVER ERROR
