@@ -5,6 +5,7 @@ import com.example.demo.controller.dto.request.LoginRequestDto;
 import com.example.demo.controller.dto.response.user.LoginResponseDto;
 import com.example.demo.exception.SuccessCode;
 import com.example.demo.service.login.LoginService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,13 +19,14 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/login")
-    public BaseResponse<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public BaseResponse<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
         loginService.signIn(loginRequestDto);
         return BaseResponse.success(SuccessCode.LOGIN_SUCCESS, new LoginResponseDto("로그인 성공"));
     }
 
     @PostMapping("/register")
-    public BaseResponse<LoginResponseDto> register(@RequestBody LoginRequestDto loginRequestDto) {
+    public BaseResponse<LoginResponseDto> register(@RequestBody @Valid LoginRequestDto loginRequestDto) {
+
         loginService.register(loginRequestDto);
         return BaseResponse.success(SuccessCode.SIGNIN_SUCCESS, new LoginResponseDto("회원가입 성공"));
     }
