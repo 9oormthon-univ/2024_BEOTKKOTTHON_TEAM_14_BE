@@ -18,7 +18,7 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final LoginRepository loginRepository;
     public void signIn(LoginRequestDto loginRequestDto) {
-        User user = loginRepository.findByEmail(loginRequestDto.getEmail()).orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION, ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage()));
+        User user = loginRepository.findByPhoneNumber(loginRequestDto.getPhoneNumber()).orElseThrow(()-> new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION, ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage()));
         if(!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())){
             throw new CustomException(ErrorCode.INVALID_PASSWORD_EXCEPTION, ErrorCode.INVALID_PASSWORD_EXCEPTION.getMessage());
         }
@@ -31,6 +31,8 @@ public class LoginService {
         if(user.isEmpty()){
             User newUser = User.builder()
                     .email(loginRequestDto.getEmail())
+                    .phoneNumber(loginRequestDto.getPhoneNumber())
+                    .name(loginRequestDto.getName())
                     .password(encodedPassword)
                     .build();
             loginRepository.save(newUser);
