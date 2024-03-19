@@ -31,11 +31,13 @@ public class LoginService {
         if(user.isEmpty()){
             User newUser = User.builder()
                     .email(loginRequestDto.getEmail())
-                    .nickname(loginRequestDto.getNickName())
                     .password(encodedPassword)
                     .build();
             loginRepository.save(newUser);
             System.out.println("회원가입성공");
+        }else {
+            System.out.println("이미 존재하는 유저");
+            throw new CustomException(ErrorCode.DUPLICATE_USER_EXCEPTION,ErrorCode.DUPLICATE_USER_EXCEPTION.getMessage());
         }
 
     }
