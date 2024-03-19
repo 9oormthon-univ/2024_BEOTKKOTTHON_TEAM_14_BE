@@ -7,23 +7,29 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
-@Entity
 @Getter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Will extends BaseEntity {
+@Entity
+@NoArgsConstructor
+@Builder
+public class Answer extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column
-    private String signature;
+    private String answer1 = null;
 
-    @Column(length = 500)
-    private String answerFree;
+    @Column
+    private String answer2 = null;
+
+    @Column
+    private String answer3 = null;
+
+    @Column
+    private String answer4 = null;
+
+    @Column
+    private String answer5 = null;
 }
-
