@@ -1,4 +1,4 @@
-package com.example.demo.domain.contents;
+package com.example.demo.domain.will;
 
 import com.example.demo.domain.BaseEntity;
 import jakarta.persistence.Column;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Note extends BaseEntity {
+public class Will extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
@@ -22,7 +22,7 @@ public class Note extends BaseEntity {
     @Column(nullable = false)
     private String password;
 
-    public Note(String name, String content, String password) {
+    public Will(String name, String content, String password) {
         this.name = name;
         this.content = content;
         this.password = password;

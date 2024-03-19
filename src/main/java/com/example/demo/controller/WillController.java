@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.controller.dto.response.contents.NoteDto;
-import com.example.demo.domain.contents.Note;
-import com.example.demo.service.contents.NoteService;
+import com.example.demo.controller.dto.response.will.WillResponseDto;
+import com.example.demo.domain.will.Will;
+import com.example.demo.service.will.WillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,22 +11,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notes")
-public class NoteController {
-    private final NoteService noteService;
+public class WillController {
+    private final WillService willService;
 
     @Autowired
-    public NoteController(NoteService noteService) {
-        this.noteService = noteService;
+    public WillController(WillService willService) {
+        this.willService = willService;
     }
 
     @PostMapping
-    public Note createNote(@RequestBody NoteDto request) {
-        return noteService.createNote(request.getName(), request.getContent(), request.getPassword());
+    public Will createNote(@RequestBody WillResponseDto request) {
+        return willService.createNote(request.getName(), request.getContent(), request.getPassword());
     }
 
     @GetMapping
-    public List<Note> getNotes() {
-        return noteService.getAllNotes();
+    public List<Will> getNotes() {
+        return willService.getAllNotes();
     }
 
 //    @PutMapping("/{name}")
