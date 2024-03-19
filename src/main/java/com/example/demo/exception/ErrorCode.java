@@ -37,6 +37,8 @@ public enum ErrorCode {
      * 409 Conflict
      */
     DUPLICATE_USER_EXCEPTION(HttpStatus.CONFLICT, "이미 존재하는 유저입니다."),
+    DUPLICATE_WILL_EXCEPTION(HttpStatus.CONFLICT, "유서를 이미 작성하셨습니다. 유서는 한 사람 당 한개입니다."),
+    DUPLICATE_ANSWER_EXCEPTION(HttpStatus.CONFLICT, "질문을 이미 답변하셨습니다."),
 
     /**
      * 500 INTERNAL SERVER ERROR
