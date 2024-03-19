@@ -1,8 +1,11 @@
 package com.example.demo.domain.will;
 
 import com.example.demo.domain.BaseEntity;
+import com.example.demo.domain.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,21 +15,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Will extends BaseEntity {
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String content;
-
-    @Column(nullable = false)
-    private String password;
-
-    public Will(String name, String content, String password) {
-        this.name = name;
-        this.content = content;
-        this.password = password;
-    }
-
+    @Column(length = 500)
+    private String answerFree;
 }
 
