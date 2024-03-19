@@ -23,7 +23,7 @@ public enum ErrorCode {
      * 401 UNAUTHORIZED
      */
     INVALID_PASSWORD_EXCEPTION(HttpStatus.UNAUTHORIZED, "일치하지 않는 비밀번호입니다."),
-
+    TOKEN_TIME_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "만료된 토큰입니다."),
     /**
      * 404 NOT FOUND
      */
@@ -34,9 +34,9 @@ public enum ErrorCode {
 
 
     /**
-     * 401 UNAUTHORIZED
+     * 409 Conflict
      */
-    TOKEN_TIME_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "만료된 토큰입니다."),
+    DUPLICATE_USER_EXCEPTION(HttpStatus.CONFLICT, "이미 존재하는 유저입니다."),
 
     /**
      * 500 INTERNAL SERVER ERROR
