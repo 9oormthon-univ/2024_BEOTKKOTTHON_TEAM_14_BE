@@ -29,7 +29,7 @@ public enum ErrorCode {
      */
     NOT_FOUND_USER_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 유저입니다."),
     NOT_FOUND_IMAGE_EXCEPTION(HttpStatus.NOT_FOUND, "존재하지 않는 이미지입니다."),
-    NOT_FOUND_NOTE(HttpStatus.NOT_FOUND, "존재하지 않는 유서입니다."),
+    NOT_FOUND_WILL(HttpStatus.NOT_FOUND, "존재하지 않는 유서입니다."),
     NOT_FOUND_ANSWER(HttpStatus.NOT_FOUND, "존재하지 않는 질문의 답변입니다."),
 
 
