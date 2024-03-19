@@ -19,22 +19,22 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/login")
-    public BaseResponse<LoginResponseDto> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
+    public BaseResponse<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
         loginService.signIn(loginRequestDto);
-        return BaseResponse.success(SuccessCode.LOGIN_SUCCESS, new LoginResponseDto("로그인 성공"));
+        return BaseResponse.success(SuccessCode.LOGIN_SUCCESS,SuccessCode.LOGIN_SUCCESS.getMessage());
     }
 
     @PostMapping("/register")
-    public BaseResponse<LoginResponseDto> register(@RequestBody @Valid LoginRequestDto loginRequestDto) {
+    public BaseResponse<String> register(@RequestBody @Valid LoginRequestDto loginRequestDto) {
 
         loginService.register(loginRequestDto);
-        return BaseResponse.success(SuccessCode.SIGNIN_SUCCESS, new LoginResponseDto("회원가입 성공"));
+        return BaseResponse.success(SuccessCode.SIGNIN_SUCCESS,SuccessCode.SIGNIN_SUCCESS.getMessage());
     }
 
     @PostMapping("/logout")
-    public BaseResponse<LoginResponseDto> logout() {
+    public BaseResponse<String> logout() {
         loginService.logout();
-        return BaseResponse.success(SuccessCode.SIGNOUT_SUCCESS, new LoginResponseDto("로그아웃 성공"));
+        return BaseResponse.success(SuccessCode.SIGNOUT_SUCCESS,SuccessCode.SIGNOUT_SUCCESS.getMessage());
     }
 
 }
