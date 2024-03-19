@@ -1,16 +1,14 @@
 package com.example.demo.controller.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.Pattern;
+import lombok.*;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class LoginRequestDto {
     private String email;
+
+    @Pattern(regexp = "^(?=.*[!@#$%^&*(),.?\":{}|<>])(?=.*[A-Za-z0-9]).{5,}$", message = "비밀번호는 최소 5자 이상이고, 특수 문자 하나를 포함해야 합니다.")
     private String password;
-    private String nickName;
 }
