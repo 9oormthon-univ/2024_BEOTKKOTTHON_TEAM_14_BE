@@ -25,5 +25,6 @@ public class Will extends BaseEntity {
     private String signature; //서명
 
     @Column(length = 500)
-    private String answerFree;
+    @Builder.Default
+    private String answerFree = "";
 }
