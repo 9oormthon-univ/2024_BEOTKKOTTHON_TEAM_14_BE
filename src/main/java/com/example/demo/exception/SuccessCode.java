@@ -24,6 +24,7 @@ public enum SuccessCode {
     SIGNIN_SUCCESS(HttpStatus.CREATED, "회원가입이 완료됐습니다."),
     SIGNOUT_SUCCESS(HttpStatus.CREATED, "로그아웃이 완료됐습니다."),
     CREATE_COMPLETE_SUCCESS(HttpStatus.CREATED, "성공적으로 글을 작성했습니다."),
+    UPDATE_COMPLETE_SUCCESS(HttpStatus.CREATED, "성공적으로 수정을 완료했습니다."),
 
 
     /**
