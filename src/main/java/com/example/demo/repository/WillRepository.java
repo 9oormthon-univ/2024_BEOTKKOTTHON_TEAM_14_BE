@@ -8,7 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface WillRepository extends JpaRepository<Will, Long> {
-    Optional<Will> findBynameAndPassword(String name, String password);
-    Optional<Will> findByUserId(String userId);
-
+    Optional<Will> findByUserId(Long user_id);
 }

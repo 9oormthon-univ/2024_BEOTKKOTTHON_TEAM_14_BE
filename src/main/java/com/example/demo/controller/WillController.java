@@ -27,7 +27,4 @@ public class WillController {
         willService.deleteWill(userId);
         return BaseResponse.success(SuccessCode.DELETE_SUCCESS, SuccessCode.DELETE_SUCCESS.getMessage());
     }
-
-
-
 }
