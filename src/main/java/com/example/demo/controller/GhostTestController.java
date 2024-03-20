@@ -12,7 +12,7 @@ public class GhostTestController {
     private GhostTestService ghostTestService;
 
     @PostMapping
-    public String detectGhostType(@RequestBody GhostTestRequest request) {
+    public int ghostType(@RequestBody GhostTestRequest request) {
         return ghostTestService.ghostType(request);
     }
 }
