@@ -50,13 +50,13 @@ public class LoginService {
         System.out.println("로그아웃 성공");
     }
 
-    public void delete(LoginRequestDto loginRequestDto) {
-        Optional<User> user = loginRepository.findByEmail(loginRequestDto.getEmail());
+    public void delete(String phoneNumber) {
+        Optional<User> user = loginRepository.findByEmail(phoneNumber);
         if (user.isEmpty()) {
             throw new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION, ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage());
         } else {
             User user1 = user.get();
-            if (!user1.getPhoneNumber().equals(loginRequestDto.getPhoneNumber())) {
+            if (!user1.getPhoneNumber().equals(phoneNumber)) {
                 throw new CustomException(ErrorCode.INVALID_PHONE_NUMBER_EXCEPTION, ErrorCode.INVALID_PHONE_NUMBER_EXCEPTION.getMessage());
             } else {
                 System.out.println("회원 탈퇴 성공");
