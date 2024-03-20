@@ -3,14 +3,15 @@ package com.example.demo.controller;
 import com.example.demo.common.dto.BaseResponse;
 import com.example.demo.controller.dto.request.LoginRequestDto;
 import com.example.demo.controller.dto.response.user.LoginResponseDto;
+import com.example.demo.domain.user.User;
 import com.example.demo.exception.SuccessCode;
 import com.example.demo.service.login.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.representer.BaseRepresenter;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -37,4 +38,9 @@ public class LoginController {
         return BaseResponse.success(SuccessCode.SIGNOUT_SUCCESS,SuccessCode.SIGNOUT_SUCCESS.getMessage());
     }
 
+    @DeleteMapping("/delete/{phoneNumber}")
+    public BaseResponse<String> delete(@PathVariable String phoneNumber){
+        loginService.delete(phoneNumber);
+        return BaseResponse.success(SuccessCode.DELETE_SUCCESS, SuccessCode.DELETE_SUCCESS.getMessage());
+    }
 }
