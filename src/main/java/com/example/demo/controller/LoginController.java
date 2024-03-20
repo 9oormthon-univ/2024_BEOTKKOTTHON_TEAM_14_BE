@@ -2,16 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.common.dto.BaseResponse;
 import com.example.demo.controller.dto.request.LoginRequestDto;
-import com.example.demo.controller.dto.response.user.LoginResponseDto;
 import com.example.demo.domain.user.User;
 import com.example.demo.exception.SuccessCode;
 import com.example.demo.service.login.LoginService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.yaml.snakeyaml.representer.BaseRepresenter;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -20,8 +17,13 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/login")
-    public BaseResponse<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto) {
-        loginService.signIn(loginRequestDto);
+    public BaseResponse<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpSession session) {
+        loginService.signIn(loginRequestDto, session);
+
+        // 확인용코드
+        User user = (User) session.getAttribute("user");
+        System.out.println("세션에 저장된 사용자 정보: " + user);
+
         return BaseResponse.success(SuccessCode.LOGIN_SUCCESS,SuccessCode.LOGIN_SUCCESS.getMessage());
     }
 

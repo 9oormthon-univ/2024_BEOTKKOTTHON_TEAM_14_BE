@@ -5,10 +5,11 @@ import com.example.demo.domain.user.User;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.exception.model.CustomException;
 import com.example.demo.repository.LoginRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
@@ -18,11 +19,15 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final LoginRepository loginRepository;
 
-    public void signIn(LoginRequestDto loginRequestDto) {
+    public void signIn(LoginRequestDto loginRequestDto, HttpSession session) {
         User user = loginRepository.findByPhoneNumber(loginRequestDto.getPhoneNumber()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION, ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage()));
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
             throw new CustomException(ErrorCode.INVALID_PASSWORD_EXCEPTION, ErrorCode.INVALID_PASSWORD_EXCEPTION.getMessage());
         }
+
+        // 로그인 성공 시 세션에 사용자정보 저장
+        session.setAttribute("user", user);
+
         System.out.println("로그인 성공");
     }
 
