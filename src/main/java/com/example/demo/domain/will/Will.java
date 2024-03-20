@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -21,9 +22,8 @@ public class Will extends BaseEntity {
     private User user;
 
     @Column
-    private String signature;
+    private String signature; //서명
 
     @Column(length = 500)
-    private String answerFree;
+    private String answerFree = null;
 }
-
