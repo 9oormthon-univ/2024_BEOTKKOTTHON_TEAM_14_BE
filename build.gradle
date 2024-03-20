@@ -47,6 +47,3 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-springBoot {
-	mainClass = 'com.example.demo.Team14Application'
-}
