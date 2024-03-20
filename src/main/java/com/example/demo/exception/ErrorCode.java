@@ -23,6 +23,7 @@ public enum ErrorCode {
      * 401 UNAUTHORIZED
      */
     INVALID_PASSWORD_EXCEPTION(HttpStatus.UNAUTHORIZED, "일치하지 않는 비밀번호입니다."),
+    INVALID_PHONE_NUMBER_EXCEPTION(HttpStatus.BAD_REQUEST,"일치하지 않는 전화번호입니다"),
     TOKEN_TIME_EXPIRED_EXCEPTION(HttpStatus.UNAUTHORIZED, "만료된 토큰입니다."),
     /**
      * 404 NOT FOUND
