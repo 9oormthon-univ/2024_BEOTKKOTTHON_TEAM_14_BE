@@ -36,3 +36,14 @@ logging:
 openai:
   api: https://api.openai.com
   key: ${OPENAI_API_KEY}
+
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+          type:
+            descriptor:
+              sql:
+        springframework:
+          web: ERROR
