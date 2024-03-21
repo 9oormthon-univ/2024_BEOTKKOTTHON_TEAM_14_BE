@@ -5,9 +5,9 @@ server:
 
 spring:
   datasource:
-    url: ${DB_JDBC_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://plandeathdb.c3fxvh11ftpt.ap-northeast-2.rds.amazonaws.com:3306/plandeathdb
+    username: root
+    password: rootroot
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
   thymeleaf:
@@ -17,7 +17,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     open-in-view: false
     show-sql: true
 
@@ -36,3 +36,14 @@ logging:
 openai:
   api: https://api.openai.com
   key: ${OPENAI_API_KEY}
+
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: DEBUG
+          type:
+            descriptor:
+              sql:
+        springframework:
+          web: ERROR
