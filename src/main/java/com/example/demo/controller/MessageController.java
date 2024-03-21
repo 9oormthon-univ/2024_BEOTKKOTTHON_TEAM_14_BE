@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.common.dto.BaseResponse;
 import com.example.demo.controller.dto.request.MessageRequestDto;
+import com.example.demo.domain.message.Message;
 import com.example.demo.domain.user.User;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.exception.SuccessCode;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/messages")
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ public class MessageController {
 
     private final MessageService messageService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<BaseResponse<String>> createMessage(@RequestBody MessageRequestDto requestDto, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
@@ -28,6 +31,18 @@ public class MessageController {
 
         messageService.createMessage(requestDto, user);
         BaseResponse<String> response = BaseResponse.success(SuccessCode.CREATE_COMPLETE_SUCCESS, SuccessCode.CREATE_COMPLETE_SUCCESS.getMessage());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<BaseResponse<List<Message>>> getAllMessages(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new CustomException(ErrorCode.INVALID_USER_EXCEPTION, ErrorCode.INVALID_USER_EXCEPTION.getMessage());
+        }
+
+        List<Message> messages = messageService.getAllMessagesByUser(user);
+        BaseResponse<List<Message>> response = BaseResponse.success(SuccessCode.GET_MESSAGE_SUCCESS, messages);
         return ResponseEntity.ok(response);
     }
 
