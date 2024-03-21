@@ -16,6 +16,8 @@
 
 package com.example.demo.dalle;
 
+import com.example.demo.exception.ErrorCode;
+import com.example.demo.exception.model.CustomException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -40,7 +42,7 @@ public class DalleImageGeneratorService { //달리와 통신 + 이미지 생성�
 
     public Mono<String> generateImage(String prompt) { //프롬프트를 통해 달리에 이미지 생성 요청 전송
         if (!StringUtils.hasText(prompt)) {
-            throw new IllegalArgumentException("Prompt must not be empty");
+            throw new CustomException(ErrorCode.VALIDATION_REQUEST_MISSING_EXCEPTION, ErrorCode.VALIDATION_REQUEST_MISSING_EXCEPTION.getMessage());
         }
         LOGGER.info("Sending request to DALL-E: {}", prompt);
         final var req = new ImageGenerationRequest(prompt,"dall-e-3");
