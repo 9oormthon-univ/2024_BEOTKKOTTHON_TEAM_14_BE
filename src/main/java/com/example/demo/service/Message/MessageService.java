@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MessageService {
@@ -25,6 +27,11 @@ public class MessageService {
         System.out.println("메세지 작성 성공");
         messageRepository.save(message);
     }
+
+    public List<Message> getAllMessagesByUser(User user) {
+        return messageRepository.findByUser(user);
+    }
+
 
     public Message updateMessage(Long messageId, MessageRequestDto requestDto, User user) {
         Message message = messageRepository.findByIdAndUser(messageId, user);
@@ -45,6 +52,7 @@ public class MessageService {
             messageRepository.delete(message);
         }
     }
+
 }
 
 

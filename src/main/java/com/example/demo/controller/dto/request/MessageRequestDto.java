@@ -1,13 +1,13 @@
 package com.example.demo.controller.dto.request;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Getter
+@Setter
 public class MessageRequestDto {
     private String message;
     private String receiver;

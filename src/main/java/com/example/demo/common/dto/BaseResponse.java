@@ -19,8 +19,8 @@ public class BaseResponse<T> {
         return new BaseResponse<>(success.getHttpStatusCode(), success.getMessage());
     }
 
-    public static <T> BaseResponse<T> success(SuccessCode success, T data) {
-        return new BaseResponse<T>(success.getHttpStatusCode(), success.getMessage(), data);
+    public static <T> BaseResponse<T> success(SuccessCode success, T result) {
+        return new BaseResponse<T>(success.getHttpStatusCode(), success.getMessage(), result);
     }
 
     public static BaseResponse error(ErrorCode error) {
