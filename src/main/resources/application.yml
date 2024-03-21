@@ -27,7 +27,17 @@ spring:
     resources:
       static-locations: classpath:/static
     static-path-pattern: /static/**
-
+cloud:
+  aws:
+    credentials:
+      access-key: ${AWS_ACCESS_KEY}
+      secret-key: ${AWS_SECRET_KEY}
+#    s3:
+#      bucket:
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 logging:
   level:
     org.hibernate.SQL: debug
