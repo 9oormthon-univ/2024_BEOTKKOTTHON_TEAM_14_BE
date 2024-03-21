@@ -13,7 +13,7 @@ import lombok.*;
 public class BaseResponse<T> {
     private final int code;
     private final String message;
-    private T data;
+    private T result;
 
     public static BaseResponse success(SuccessCode success) {
         return new BaseResponse<>(success.getHttpStatusCode(), success.getMessage());
