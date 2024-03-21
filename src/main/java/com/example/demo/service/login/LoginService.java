@@ -20,7 +20,7 @@ public class LoginService {
     private final LoginRepository loginRepository;
 
     public void signIn(LoginRequestDto loginRequestDto, HttpSession session) {
-        User user = loginRepository.findByPhoneNumber(loginRequestDto.getPhoneNumber()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION, ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage()));
+        User user = loginRepository.findByEmail(loginRequestDto.getEmail()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION, ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage()));
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
             throw new CustomException(ErrorCode.INVALID_PASSWORD_EXCEPTION, ErrorCode.INVALID_PASSWORD_EXCEPTION.getMessage());
         }
