@@ -43,7 +43,7 @@ public class DalleImageGeneratorService { //달리와 통신 + 이미지 생성�
             throw new IllegalArgumentException("Prompt must not be empty");
         }
         LOGGER.info("Sending request to DALL-E: {}", prompt);
-        final var req = new ImageGenerationRequest(prompt);
+        final var req = new ImageGenerationRequest(prompt,"dall-e-3");
         return client.post().uri(openai.api() + apiEndpoint)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + openai.key())
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
@@ -63,6 +63,6 @@ public class DalleImageGeneratorService { //달리와 통신 + 이미지 생성�
     private record ImageGenerationResponseUrl(String url) {
     }
 
-    private record ImageGenerationRequest(String prompt) {
+    private record ImageGenerationRequest(String prompt, String model) {
     }
 }
