@@ -5,6 +5,7 @@ import com.example.demo.controller.dto.request.LoginRequestDto;
 import com.example.demo.domain.user.User;
 import com.example.demo.exception.SuccessCode;
 import com.example.demo.service.login.LoginService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/login")
-    public BaseResponse<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpSession session) {
-        loginService.signIn(loginRequestDto, session);
+    public BaseResponse<String> login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpSession session, HttpServletResponse response) {
+        loginService.signIn(loginRequestDto, session, response);
 
         // 확인용코드
         User user = (User) session.getAttribute("user");
@@ -35,8 +36,8 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public BaseResponse<String> logout() {
-        loginService.logout();
+    public BaseResponse<String> logout(HttpSession session) {
+        loginService.logout(session);
         return BaseResponse.success(SuccessCode.SIGNOUT_SUCCESS,SuccessCode.SIGNOUT_SUCCESS.getMessage());
     }
 
