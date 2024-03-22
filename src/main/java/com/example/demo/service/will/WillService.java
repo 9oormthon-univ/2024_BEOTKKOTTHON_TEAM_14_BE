@@ -7,10 +7,8 @@ import com.example.demo.exception.ErrorCode;
 import com.example.demo.exception.model.CustomException;
 import com.example.demo.repository.LoginRepository;
 import com.example.demo.repository.WillRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,12 +19,14 @@ public class WillService {
     private final WillRepository willRepository;
     private final LoginRepository loginRepository;
 
-    public void createWill(WillRequestDto willRequestDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); //현재 인증된 사용자 정보
-        if (authentication == null || !authentication.isAuthenticated()) {
+    public void createWill(WillRequestDto willRequestDto, HttpSession session) {
+        // 세션에서 로그인된 사용자 정보 가져오기
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
             throw new CustomException(ErrorCode.INVALID_USER_EXCEPTION, ErrorCode.INVALID_USER_EXCEPTION.getMessage());
         }
-        Long currentId = willRequestDto.getUserId();
+
+        Long currentId = user.getId();
         Optional<Will> existWill = willRepository.findByUserId(currentId); // 유서가 존재하는지 확인
         if (existWill.isPresent()) { // 유서를 이미 작성한 경우 예외 발생
             throw new CustomException(ErrorCode.DUPLICATE_WILL_EXCEPTION, ErrorCode.DUPLICATE_WILL_EXCEPTION.getMessage());
@@ -35,10 +35,8 @@ public class WillService {
             if (userOptional.isEmpty()) { // 유저가 존재하지 않는 경우 예외 발생
                 throw new CustomException(ErrorCode.DUPLICATE_WILL_EXCEPTION, ErrorCode.DUPLICATE_WILL_EXCEPTION.getMessage());
             }
-            User user = userOptional.get(); // 유저가 존재하는 경우 유저 정보 가져오기
             Will will = Will.builder()
                     .user(user)
-                    .signature(willRequestDto.getSignature())
                     .answerFree(willRequestDto.getAnswerFree())
                     .signature(willRequestDto.getSignature())
                     .build();
