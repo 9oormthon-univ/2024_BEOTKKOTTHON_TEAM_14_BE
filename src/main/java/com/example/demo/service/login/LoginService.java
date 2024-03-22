@@ -5,6 +5,8 @@ import com.example.demo.domain.user.User;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.exception.model.CustomException;
 import com.example.demo.repository.LoginRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +21,7 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final LoginRepository loginRepository;
 
-    public void signIn(LoginRequestDto loginRequestDto, HttpSession session) {
+    public void signIn(LoginRequestDto loginRequestDto, HttpSession session, HttpServletResponse response) {
         User user = loginRepository.findByEmail(loginRequestDto.getEmail()).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER_EXCEPTION, ErrorCode.NOT_FOUND_USER_EXCEPTION.getMessage()));
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
             throw new CustomException(ErrorCode.INVALID_PASSWORD_EXCEPTION, ErrorCode.INVALID_PASSWORD_EXCEPTION.getMessage());
@@ -27,6 +29,15 @@ public class LoginService {
 
         // 로그인 성공 시 세션에 사용자정보 저장
         session.setAttribute("user", user);
+
+        // 쿠키 설정
+        Cookie cookie = new Cookie("sessionId", session.getId());
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        // 쿠키에 저장된 정보 확인
+        System.out.println("쿠키 이름: " + cookie.getName());
+        System.out.println("쿠키 값: " + cookie.getValue());
 
         System.out.println("로그인 성공");
     }
@@ -50,7 +61,8 @@ public class LoginService {
 
     }
 
-    public void logout() {
+    public void logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화해주기!
         SecurityContextHolder.clearContext();
         System.out.println("로그아웃 성공");
     }
