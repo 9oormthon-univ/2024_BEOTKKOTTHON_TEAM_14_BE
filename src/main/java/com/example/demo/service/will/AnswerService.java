@@ -6,10 +6,8 @@ import com.example.demo.domain.will.Answer;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.exception.model.CustomException;
 import com.example.demo.repository.AnswerRepository;
-import com.example.demo.repository.LoginRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,23 +16,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    private final LoginRepository loginRepository;
 
-    public void createAnswer(AnswerRequestDto answerRequestDto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); //현재 인증된 사용자 정보
-        if (authentication == null || !authentication.isAuthenticated()) {
+    public void createAnswer(AnswerRequestDto answerRequestDto, HttpSession session) {
+        // 세션에서 로그인된 사용자 정보 가져오기
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
             throw new CustomException(ErrorCode.INVALID_USER_EXCEPTION, ErrorCode.INVALID_USER_EXCEPTION.getMessage());
         }
-        Long currentId = answerRequestDto.getUserId();
+
+        Long currentId = user.getId();
         Optional<Answer> existAnswer = answerRepository.findByUserId(currentId);
         if (existAnswer.isPresent()) {
             throw new CustomException(ErrorCode.DUPLICATE_ANSWER_EXCEPTION, ErrorCode.DUPLICATE_ANSWER_EXCEPTION.getMessage());
         } else {
-            Optional<User> userOptional = loginRepository.findById(currentId);
-            if (userOptional.isEmpty()) {
-                throw new CustomException(ErrorCode.DUPLICATE_WILL_EXCEPTION, ErrorCode.DUPLICATE_WILL_EXCEPTION.getMessage());
-            }
-            User user = userOptional.get();
             Answer answer = Answer.builder()
                     .user(user)
                     .picture(answerRequestDto.getPicture())
@@ -50,13 +44,19 @@ public class AnswerService {
     }
 
     public void deleteAnswer(Long userId) {
-        Answer answer = answerRepository.findByUserId(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ANSWER, ErrorCode.NOT_FOUND_ANSWER.getMessage()));
+        Answer answer = answerRepository.findByUserId(userId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ANSWER, ErrorCode.NOT_FOUND_ANSWER.getMessage()));
+
         System.out.println("삭제 성공");
         answerRepository.delete(answer);
     }
 
-    public Optional<Answer> getAnswer(Long userId) {
-        Optional<Answer> answer = answerRepository.findByUserId(userId);
-        return answer;
+    public Answer getAnswer(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new CustomException(ErrorCode.INVALID_USER_EXCEPTION, ErrorCode.INVALID_USER_EXCEPTION.getMessage());
+        }
+        return answerRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ANSWER, ErrorCode.NOT_FOUND_ANSWER.getMessage()));
     }
 }
