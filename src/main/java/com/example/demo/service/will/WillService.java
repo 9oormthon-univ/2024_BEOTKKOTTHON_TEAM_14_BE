@@ -35,16 +35,10 @@ public class WillService {
             if (userOptional.isEmpty()) { // 유저가 존재하지 않는 경우 예외 발생
                 throw new CustomException(ErrorCode.DUPLICATE_WILL_EXCEPTION, ErrorCode.DUPLICATE_WILL_EXCEPTION.getMessage());
             }
-            String currentUsername = authentication.getName(); // 현재 사용자의 이름을 가져옴
-            // UserDetailsService에서 loadUserByUsername 메서드를 구현하여 UserDetails 객체를 반환하는 경우 UserDetails 객체를 형변환하여 사용자 정보를 얻을 수 있음
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            //Long currentUserId = getUserIdFromDatabaseByUsername(currentUsername); // 사용자 이름으로부터 ID를 데이터베이스에서 조회하는 메서드 호출
-            // 또는 UserDetails 객체에서 직접 ID를 얻을 수 있으면 다음과 같이 사용 가능
-            // Long currentUserId = ((CustomUserDetails) userDetails).getId();
-
             User user = userOptional.get(); // 유저가 존재하는 경우 유저 정보 가져오기
             Will will = Will.builder()
                     .user(user)
+                    .signature(willRequestDto.getSignature())
                     .answerFree(willRequestDto.getAnswerFree())
                     .signature(willRequestDto.getSignature())
                     .build();
