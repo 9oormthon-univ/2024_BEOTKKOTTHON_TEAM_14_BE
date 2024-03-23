@@ -45,6 +45,15 @@ public class WillService {
         }
     }
 
+    public Will getWill(HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        if (user == null) {
+            throw new CustomException(ErrorCode.INVALID_USER_EXCEPTION, ErrorCode.INVALID_USER_EXCEPTION.getMessage());
+        }
+        return willRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_WILL, ErrorCode.NOT_FOUND_WILL.getMessage()));
+    }
+
     public void deleteWill(Long userId) {
         Will will = willRepository.findByUserId(userId).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_WILL, ErrorCode.NOT_FOUND_WILL.getMessage()));
         System.out.println("삭제 성공");
