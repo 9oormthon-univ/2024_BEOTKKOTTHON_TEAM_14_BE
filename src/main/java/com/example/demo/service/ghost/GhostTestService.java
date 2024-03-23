@@ -13,7 +13,7 @@ public class GhostTestService {
         int q3 = request.getQ3();
         int q4 = request.getQ4();
 
-        boolean consistent = q1 == q2; // 1번2번 질문에 대해서 답이 다르면 -> 신비로운 유령으로!
+        boolean consistent = q1 == q2 && q3 != q4; // 1번2번 질문에 대해서 답이 다르면 -> 신비로운 유령으로!
 
         if (!consistent) {
             return 5; // 신비로운 유령
@@ -21,8 +21,8 @@ public class GhostTestService {
             int[] scores = new int[4];
             scores[0] = (q1 == 0 && q2 == 0) ? 1 : 0; // 고요한 유령
             scores[1] = (q1 == 1 && q3 == 1) ? 1 : 0; // 열정 넘치는 유령
-            scores[2] = (q3 == 1 && q4 == 0) ? 1 : 0; // 흥많은 유령
-            scores[3] = (q4 == 0 && q1 == 1) ? 1 : 0; // 영향력 있는 유령
+            scores[2] = (q1 == 1 && q3 == 1 && q4 == 0) ? 2 : 0; // 흥많은 유령
+            scores[3] = (q1 == 1 && q2 == 1 && q3 == 1) ? 2 : 0; // 영향력 있는 유령
 
             // 가장 높은 점수를 가진 유형 반환
             int maxIndex = 0;
