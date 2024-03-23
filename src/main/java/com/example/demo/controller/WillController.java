@@ -4,6 +4,7 @@ package com.example.demo.controller;
 import com.example.demo.common.dto.BaseResponse;
 import com.example.demo.controller.dto.request.WillRequestDto;
 import com.example.demo.domain.user.User;
+import com.example.demo.domain.will.Will;
 import com.example.demo.exception.ErrorCode;
 import com.example.demo.exception.SuccessCode;
 import com.example.demo.exception.model.CustomException;
@@ -28,6 +29,12 @@ public class WillController {
         }
         willService.createWill(willRequestDto, session);
         return BaseResponse.success(SuccessCode.CREATE_COMPLETE_SUCCESS,SuccessCode.CREATE_COMPLETE_SUCCESS.getMessage());
+    }
+
+    @GetMapping("/get")
+    public BaseResponse<Will> getAnswer(HttpSession session) {
+        Will will = willService.getWill(session);
+        return BaseResponse.success(SuccessCode.GET_SUCCESS, will);
     }
 
     @DeleteMapping("/delete")
