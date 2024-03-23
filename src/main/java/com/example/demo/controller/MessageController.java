@@ -10,7 +10,6 @@ import com.example.demo.exception.model.CustomException;
 import com.example.demo.service.Message.MessageService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,43 +22,38 @@ public class MessageController {
     private final MessageService messageService;
 
     @PostMapping("/create")
-    public ResponseEntity<BaseResponse<String>> createMessage(@RequestBody MessageRequestDto requestDto, HttpSession session) {
+    public BaseResponse<String> createMessage(@RequestBody MessageRequestDto requestDto, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             throw new CustomException(ErrorCode.INVALID_USER_EXCEPTION, ErrorCode.INVALID_USER_EXCEPTION.getMessage());
         }
 
         messageService.createMessage(requestDto, user);
-        BaseResponse<String> response = BaseResponse.success(SuccessCode.CREATE_COMPLETE_SUCCESS, SuccessCode.CREATE_COMPLETE_SUCCESS.getMessage());
-        return ResponseEntity.ok(response);
+        return BaseResponse.success(SuccessCode.CREATE_COMPLETE_SUCCESS, SuccessCode.CREATE_COMPLETE_SUCCESS.getMessage());
     }
 
     @GetMapping
-    public ResponseEntity<BaseResponse<List<Message>>> getAllMessages(HttpSession session) {
+    public BaseResponse<List<Message>> getAllMessages(HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             throw new CustomException(ErrorCode.INVALID_USER_EXCEPTION, ErrorCode.INVALID_USER_EXCEPTION.getMessage());
         }
-
         List<Message> messages = messageService.getAllMessagesByUser(user);
-        BaseResponse<List<Message>> response = BaseResponse.success(SuccessCode.GET_MESSAGE_SUCCESS, messages);
-        return ResponseEntity.ok(response);
+        return BaseResponse.success(SuccessCode.GET_MESSAGE_SUCCESS, messages);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<BaseResponse<String>> updateMessage(@PathVariable Long id, @RequestBody MessageRequestDto requestDto, HttpSession session) {
+    public BaseResponse<String> updateMessage(@PathVariable Long id, @RequestBody MessageRequestDto requestDto, HttpSession session) {
         User user = (User) session.getAttribute("user");
         messageService.updateMessage(id, requestDto, user);
-        BaseResponse<String> response = BaseResponse.success(SuccessCode.UPDATE_COMPLETE_SUCCESS, SuccessCode.UPDATE_COMPLETE_SUCCESS.getMessage());
-        return ResponseEntity.ok(response);
+        return BaseResponse.success(SuccessCode.UPDATE_COMPLETE_SUCCESS, SuccessCode.UPDATE_COMPLETE_SUCCESS.getMessage());
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<BaseResponse<String>> deleteMessage(@PathVariable Long id, HttpSession session) {
+    public BaseResponse<String> deleteMessage(@PathVariable Long id, HttpSession session) {
         User user = (User) session.getAttribute("user");
         messageService.deleteMessage(id, user);
-        BaseResponse<String> response = BaseResponse.success(SuccessCode.DELETE_SUCCESS, SuccessCode.DELETE_SUCCESS.getMessage());
-        return ResponseEntity.ok(response);
+        return BaseResponse.success(SuccessCode.DELETE_SUCCESS, SuccessCode.DELETE_SUCCESS.getMessage());
     }
 }
 

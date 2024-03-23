@@ -20,10 +20,16 @@ public class MessageService {
     private MessageRepository messageRepository;
 
     public void createMessage(MessageRequestDto requestDto, User user) {
-        Message message = new Message();
-        message.setMessage(requestDto.getMessage());
-        message.setReceiver(requestDto.getReceiver());
-        message.setUser(user);
+        if (user == null) {
+            throw new CustomException(ErrorCode.INVALID_USER_EXCEPTION, ErrorCode.INVALID_USER_EXCEPTION.getMessage());
+        }
+
+        Message message = Message.builder()
+                .user(user)
+                .receiver(requestDto.getMessage())
+                .message(requestDto.getMessage())
+                .build();
+
         System.out.println("메세지 작성 성공");
         messageRepository.save(message);
     }
