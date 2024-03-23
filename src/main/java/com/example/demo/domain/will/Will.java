@@ -2,11 +2,7 @@ package com.example.demo.domain.will;
 
 import com.example.demo.domain.BaseEntity;
 import com.example.demo.domain.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -22,6 +18,7 @@ public class Will extends BaseEntity {
     private User user;
 
     @Column
+    @Lob
     private String signature; //서명
 
     @Column(length = 500)
