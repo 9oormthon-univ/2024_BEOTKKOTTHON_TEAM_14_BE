@@ -20,7 +20,8 @@ public class Message extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "message")
+
+    @Column(length = 30)
     private String message;
 
     @Column(name = "receiver")
