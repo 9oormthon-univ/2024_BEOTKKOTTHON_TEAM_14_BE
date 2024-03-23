@@ -2,10 +2,7 @@ package com.example.demo.domain.will;
 
 import com.example.demo.domain.BaseEntity;
 import com.example.demo.domain.user.User;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -20,6 +17,7 @@ public class Answer extends BaseEntity {
 
     @Column
     @Builder.Default
+    @Lob
     private String picture = "";
 
     @Column(length = 100)
